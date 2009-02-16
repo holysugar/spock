@@ -73,7 +73,7 @@ updater = proc do |subj, pred, obj|
 end
 
 signable_data = serialize_resource(ds, options.ext_id, &updater)
-signer_cmdline = "#{File.dirname(__FILE__)}/nss_sign_data #{options.nss_dir}"
+signer_cmdline = %|#{File.dirname(__FILE__)}/nss_sign_data "#{options.nss_dir}"|
 
 signature = IO.popen(signer_cmdline, 'w+') do |f|
   f.write signable_data

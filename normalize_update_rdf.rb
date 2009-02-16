@@ -19,7 +19,7 @@
 # Author: Massimiliano Mirra, <bard [at] hyperstruct [dot] net>
 
 
-require 'xml/libxslt'
+require 'xml/xslt'
 require 'strscan'
 
 INDENT = '  '
@@ -62,11 +62,11 @@ def parse_nt(ntriples_dump)
 
   ntriples_dump.split("\n").each do |line|
     s = StringScanner.new(line)
-    subj = s.scan(/_:id\d{7}|<[^>]+>/).gsub(/^<|>$/, '')
+    subj = s.scan(/_:id\d{5,7}|<[^>]+>/).gsub(/^<|>$/, '')
     s.skip(/\s+/)
     pred = s.scan(/<[^>]+>/).gsub(/^<|>$/, '')
     s.skip(/\s+/)
-    obj = s.scan(/_:id\d{7}|"[^"]*"|<[^>]+>/).gsub(/^<|>$/, '').gsub(/^"|"$/, '')
+    obj = s.scan(/_:id\d{5,7}|"[^"]*"|<[^>]+>/).gsub(/^<|>$/, '').gsub(/^"|"$/, '')
 
     triples[subj] ||= []
     triples[subj] << [subj, pred, obj]
